@@ -25,9 +25,11 @@ public class FrameLimiterImpl implements FrameLimiterInterface {
     @Override
     public void sleep() {
         //Frame Limiter
+    	
         if (!PrefsSingleton.get().getBoolean("Sleep", true)) {
             return; //skip frame limiter if pref set
         }
+        
         final long timeleft = System.nanoTime() - nes.frameStartTime;
         if (timeleft < FRAME_NS) {
             final long sleepytime = (FRAME_NS - timeleft + sleepingtest);
@@ -37,7 +39,7 @@ public class FrameLimiterImpl implements FrameLimiterInterface {
             }
             sleepingtest = System.nanoTime();
             try {
-                //System.err.println(sleepytime/ 1000000.);
+                System.out.println(sleepytime/ 1000000.);
                 Thread.sleep(sleepytime / 1000000);
                 // sleep for rest of the time until the next frame
             } catch (InterruptedException ex) {
@@ -56,7 +58,6 @@ public class FrameLimiterImpl implements FrameLimiterInterface {
             Thread.sleep(16);
         } catch (InterruptedException ex) {
         }
-
     }
 
     public static void forceHighResolutionTimer() {

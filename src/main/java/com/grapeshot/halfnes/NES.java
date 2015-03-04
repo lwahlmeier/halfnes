@@ -5,6 +5,10 @@ import com.grapeshot.halfnes.cheats.ActionReplay;
 import com.grapeshot.halfnes.mappers.BadMapperException;
 import com.grapeshot.halfnes.mappers.Mapper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.prefs.Preferences;
 
 /**
@@ -53,10 +57,12 @@ public class NES {
 
     public void run() {
         while (true) {
+        	
             if (runEmulation) {
                 frameStartTime = System.nanoTime();
                 actionReplay.applyPatches();
                 runframe();
+            	//System.out.println(frameLimiterOn+":"+!dontSleep);
                 if (frameLimiterOn && !dontSleep) {
                     limiter.sleep();
                 }
@@ -69,6 +75,7 @@ public class NES {
             }
         }
     }
+    
     Runnable render = new Runnable() {
         @Override
         public void run() {
@@ -94,7 +101,7 @@ public class NES {
         //this is to prevent the emulator from getting stuck sleeping too much
         //on a slow system or when the audio buffer runs dry.
 
-        apu.finishframe();
+        //apu.finishframe();
         cpu.modcycles();
 
         //run cpu, ppu for active drawing time
@@ -210,6 +217,16 @@ public class NES {
             runEmulation = false;
             saveSRAM(false);
         }
+        halfNES.p.stop();
+        //System.out.println(halfNES.p.dump());
+        try {
+			RandomAccessFile f = new RandomAccessFile("/tmp/test.out", "rw");
+			f.write(halfNES.p.dump().getBytes());
+			f.close();
+		} catch (IOException e) {
+
+		}
+        
         System.exit(0);
     }
 

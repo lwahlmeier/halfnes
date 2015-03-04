@@ -54,7 +54,7 @@ public class GUIImpl extends JFrame implements GUIInterface {
         padController2.startEventQueue();
     }
 
-    public synchronized void setRenderOptions() {
+    public void setRenderOptions() {
         if (canvas != null) {
             this.remove(canvas);
         }
@@ -248,6 +248,7 @@ public class GUIImpl extends JFrame implements GUIInterface {
     }
 
     private void loadROM(String path) {
+    	System.out.println(path);
         if (path.endsWith(".zip") || path.endsWith(".ZIP")) {
             try {
                 loadRomFromZip(path);
@@ -401,7 +402,7 @@ public class GUIImpl extends JFrame implements GUIInterface {
     }
 
     @Override
-    public final synchronized void render() {
+    public final void render() {
         final Graphics graphics = buffer.getDrawGraphics();
         if (smoothScale) {
             ((Graphics2D) graphics).setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
