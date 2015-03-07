@@ -101,7 +101,7 @@ public class NES {
         //this is to prevent the emulator from getting stuck sleeping too much
         //on a slow system or when the audio buffer runs dry.
 
-        //apu.finishframe();
+        apu.finishframe();
         cpu.modcycles();
 
         //run cpu, ppu for active drawing time

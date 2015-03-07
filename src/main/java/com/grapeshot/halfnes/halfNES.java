@@ -21,7 +21,7 @@ public class halfNES {
         }
         com.grapeshot.halfnes.NES thing = new com.grapeshot.halfnes.NES();
         if (args == null || args.length < 1 || args[0] == null) {
-            thing.run("/mnt/raid6/sync/luke/games.roms/NES/USA/1943 (U).nes");
+            thing.run();
         } else {
             thing.run(args[0]);
         }
